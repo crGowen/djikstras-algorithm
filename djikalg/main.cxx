@@ -2,12 +2,12 @@
 #include <iostream>
 
 //CONNECTION
-Connection::Connection(const unsigned __int64 i, const unsigned __int32 c) : index{ i }, cost{ c } {}
+Connection::Connection(const std::uint64_t i, const std::uint32_t c) : index{ i }, cost{ c } {}
 
 //NODE
 Node::Node(const std::string& n) : name{ n }, eNodeState{ NodeState::UNVISITED }, associatedCost{ 0 }, priorNode{ 0 } {}
 
-bool Node::CreateConnection(const unsigned __int64& i, unsigned __int32 c) {
+bool Node::CreateConnection(const std::uint64_t& i, std::uint32_t c) {
 	this->connections.push_back(Connection(i, c));
 
 	return true;
@@ -41,8 +41,8 @@ Graph::ErrState Graph::CoutListNodes() {
 	return ErrState::success;
 }
 
-Graph::ErrState Graph::ConnectNodes(const std::string& node1, const std::string& node2, const unsigned __int32 forwardCost, const unsigned __int32 backwardCost) {
-	unsigned __int64 index1, index2;
+Graph::ErrState Graph::ConnectNodes(const std::string& node1, const std::string& node2, const std::uint32_t forwardCost, const std::uint32_t backwardCost) {
+	std::uint64_t index1, index2;
 
 	// Get indexes
 	std::vector<Node>::iterator it = std::find_if(this->nodes.begin(), this->nodes.end(),
@@ -70,7 +70,7 @@ Graph::ErrState Graph::ConnectNodes(const std::string& node1, const std::string&
 		return ErrState::unkCNErr;
 }
 
-Graph::ErrState Graph::ConnectNodes(const std::string& node1, const std::string& node2, const unsigned __int32 edgeCost) {
+Graph::ErrState Graph::ConnectNodes(const std::string& node1, const std::string& node2, const std::uint32_t edgeCost) {
 	return Graph::ConnectNodes(node1, node2, edgeCost, edgeCost);
 }
 
@@ -79,7 +79,7 @@ std::string Graph::GetOptimalRoute() {
 }
 
 Graph::ErrState Graph::RunDjikstrasAlgorithm(const std::string& start, const std::string& end) {
-	unsigned __int64 indexS, indexE;
+	std::uint64_t indexS, indexE;
 
 	// Get indexes
 	std::vector<Node>::iterator it = std::find_if(this->nodes.begin(), this->nodes.end(),
@@ -102,7 +102,7 @@ Graph::ErrState Graph::RunDjikstrasAlgorithm(const std::string& start, const std
 
 	for (Node& n : this->nodes) n.eNodeState = Node::NodeState::UNVISITED;
 
-	unsigned __int64 currentNode = indexS;
+	std::uint64_t currentNode = indexS;
 	this->nodes[currentNode].associatedCost = 0;
 	this->nodes[currentNode].eNodeState = Node::NodeState::LOCKED;
 

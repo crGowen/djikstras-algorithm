@@ -1,14 +1,19 @@
 #pragma once
 
-#ifdef DJIKALG_EXPORT
-#define DJIKALG_IMEX __declspec(dllexport)
+#ifdef _WIN32
+	#ifdef DJIKALG_EXPORT
+	#define DJIKALG_IMEX __declspec(dllexport)
+	#else
+	#define DJIKALG_IMEX __declspec(dllimport)
+	#endif
 #else
-#define DJIKALG_IMEX __declspec(dllimport)
+	#define DJIKALG_IMEX
 #endif
 
 #include <vector>
 #include <string>
 #include <map>
+#include <cstdint>
 
 /*
 * Alot of this code is VERY old, this needs a big refactor
@@ -21,12 +26,12 @@ extern "C" {
 		friend class Node;
 		friend class Graph;
 	private:
-		unsigned __int64 index;
-		unsigned __int32 cost;
+		std::uint64_t index;
+		std::uint32_t cost;
 
 		Connection() = delete;
 
-		Connection(const unsigned __int64, const unsigned __int32);
+		Connection(const std::uint64_t, const std::uint32_t);
 	};
 
 	class DJIKALG_IMEX Node {
@@ -37,14 +42,14 @@ extern "C" {
 		NodeState eNodeState;
 		std::string name;
 		std::vector< Connection > connections;
-		unsigned __int32 associatedCost;
-		unsigned __int64 priorNode;
+		std::uint32_t associatedCost;
+		std::uint64_t priorNode;
 
 		Node() = delete; // forbid default constructor
 
 		Node(const std::string&);
 
-		bool CreateConnection(const unsigned __int64&, unsigned __int32);
+		bool CreateConnection(const std::uint64_t&, std::uint32_t);
 	};
 
 	class DJIKALG_IMEX Graph {
@@ -56,16 +61,16 @@ extern "C" {
 		Graph() = delete; // forbid default constructor
 	public:
 		enum class ErrState { success, attemptToCreateExistingNode, unkCNErr, nodeNotFound, noPossiblePath };
-		unsigned __int32 optimalRouteCost;
+		std::uint32_t optimalRouteCost;
 
 		// Create new graph with specified name
 		Graph(const std::string& n);
 
 		// Connect the specified nodes asymmetrically. If a specified node doesn't exist, it will be created
-		ErrState ConnectNodes(const std::string& node1, const std::string& node2, const unsigned __int32 forwardCost, const unsigned __int32 backwardCost);
+		ErrState ConnectNodes(const std::string& node1, const std::string& node2, const std::uint32_t forwardCost, const std::uint32_t backwardCost);
 
 		// Connect the specified nodes symmetrically. If a specified node doesn't exist, it will be created
-		ErrState ConnectNodes(const std::string& node1, const std::string& node2, const unsigned __int32 edgeCost);
+		ErrState ConnectNodes(const std::string& node1, const std::string& node2, const std::uint32_t edgeCost);
 
 		// Create Node for this graph
 		ErrState CreateNode(const std::string& name);
