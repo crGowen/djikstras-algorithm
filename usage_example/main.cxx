@@ -1,4 +1,4 @@
-#include "djikstras-alg.h"
+#include "djikalg.h"
 #include <iostream>
 
 int main() {
