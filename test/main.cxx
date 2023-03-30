@@ -40,7 +40,7 @@ int main() {
 
     std::cout << "\nTEST: Ensure that E->A shows correct optimal route...";
     const Graph::ErrState err2 = myGraph.RunDjikstrasAlgorithm("Echo", "Alpha");
-    if (err2 == Graph::ErrState::success && myGraph.GetOptimalRoute() == "Echo -> Brvo -> Alpha")
+    if (err2 == Graph::ErrState::success && myGraph.GetOptimalRoute() == "Echo -> Bravo -> Alpha")
     {
         std::cout << "PASS.";
     }
