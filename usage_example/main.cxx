@@ -25,10 +25,10 @@ int main() {
     // print list of nodes
     myGraph.CoutListNodes();
 
-    myGraph.RunDjikstrasAlgorithm("Alpha", "Echo");
+    const Graph::ErrState err1 = myGraph.RunDjikstrasAlgorithm("Alpha", "Echo");
     std::cout << "\n" << myGraph.GetOptimalRoute() << " with cost of " << myGraph.optimalRouteCost;
 
-    const Graph::ErrState err = myGraph.RunDjikstrasAlgorithm("Echo", "Alpha");
+    const Graph::ErrState err2 = myGraph.RunDjikstrasAlgorithm("Echo", "Alpha");
     std::cout << "\n" << myGraph.GetOptimalRoute() << " with cost of " << myGraph.optimalRouteCost;
 
     return 0;
